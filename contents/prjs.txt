@@ -1,0 +1,14 @@
+<b>SAP, Sofia, Bulgaria — Summer Internship</b><br>
+2016-06-07 – 2016-08-18<br>
+Employer - Stoyan Vellev, SAP Bulgaria<br>
+Main activity – studying under working conditions and developing personalized projects in C++, set by the employer.<br>
+<br>
+<b>Documaster, Sofia, Bulgaria — Internship</b><br>
+2017-06-04 – 2017-09-01<br>
+Employer – Dimitar Ouzounov, Documaster<br>
+Main activity – Developed Natural Language Processing web application. A news portal for accessing processed news and information from various news sources.<br>
+<br>
+<b>Documaster, Sofia, Bulgaria — Internship</b><br>
+2018-05-16 – 2018-08-28<br>
+Employer – Dimitar Ouzounov, Documaster<br>
+Main activity – Work on internal products for automation of Database mappings. Automation of container setups. Desktop application development.<br>

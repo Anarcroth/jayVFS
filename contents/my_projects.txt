@@ -1,0 +1,10 @@
+NLP in news Media<br>
+A web application that analyses a set of accumulating articles, categorizes them, prints out a summary of the text,  keywords, names, and organizations. The app supports a user profile, that receives recommendations based on the users interaction with the app.<br>
+<br>
+Pyther<br>
+A mini DOS-like game, that tests your typing speed.<br>
+<a href="https://github.com/Anarcroth/pyther">https://github.com/Anarcroth/pyther</a><br>
+<br>
+Open Cpp Tutorials<br>
+As a part of the Student Assistant job, these are a set of slides, aimed to tell more advanced topics for students in C++ courses.<br>
+<a href="https://github.com/Anarcroth/cpp-tutorials">https://github.com/Anarcroth/cpp-tutorials</a><br>

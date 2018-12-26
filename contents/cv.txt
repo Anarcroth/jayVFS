@@ -1,0 +1,27 @@
+<b>American University in Bulgaria, Blagoevgrad, Bulgaria</b> — Computer Science and Information Systems Major<br>
+2015-09-01 - 2019-05-18<br>
+An active student in the Computer Science community and a Student Assistant in Data Structures and C++ courses.<br>
+<br>
+Courses Taken:<br>
+Finite Mathematics<br>
+Linear Algebra<br>
+Calculus I<br>
+Calculus II<br>
+Discrete Structures<br>
+C++<br>
+Visual Basic<br>
+Java<br>
+Advanced JavaScript<br>
+Fundamental Data Structures<br>
+Database Systems<br>
+Analysis and Design of Information Systems<br>
+Introduction to UNIX<br>
+Computer Architecture<br>
+Software Engineering<br>
+Data Mining<br>
+Tackling Software with Domain Driven Design<br>
+Object-Oriented Programming<br>
+Mobile Computing<br>
+DevOps<br>
+Web Server Technologies<br>
+Computer Networks<br>
