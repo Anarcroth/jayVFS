@@ -2,10 +2,9 @@ const user = require('../src/user');
 const mTree = require('../src/mtree');
 
 var jayVFS = function() {
-    this.wd = ['/'];
-
     this.user = user;
     this.mtree = new mTree('root');
+    this.wd = this.mtree;
 
     this.mapDirs();
     this.mapFiles();
@@ -23,21 +22,15 @@ jayVFS.prototype.mapDirs = function() {
 jayVFS.prototype.mapFiles = function() {
     let files = this.user.getFinalFiles();
     for (let f = 0; f < files.length - 1; f += 2) {
-        let file = files[f].split('/').filter(n => n);
-        let createdFile = this.createFile(file);
+        let createdFile = this.createFile(files[f]);
         createdFile.append(files[f + 1]);
     }
 };
 
 jayVFS.prototype.deleteFile = function(filePath) {
     try {
-        if (filePath.length === 1) {
-            this.mtree.deleteINode(filePath.pop());
-        } else {
-            let file = filePath.pop();
-            let tarDir = this.mtree.moveTo(filePath);
-            tarDir.deleteINode(file);
-        }
+        let {file, tarDir} = this.filterPath(filePath);
+        tarDir.deleteINode(file);
     } catch(e) {
         console.log(e);
         throw e;
@@ -46,13 +39,8 @@ jayVFS.prototype.deleteFile = function(filePath) {
 
 jayVFS.prototype.createFile = function(filePath) {
     try {
-        if (filePath[0] === '/') {
-            return this.mtree.addINode(filePath.pop().toString());
-        } else {
-            let file = filePath.pop();
-            let tarDir = this.mtree.moveTo(filePath);
-            return tarDir.addINode(file);
-        }
+        let {file, tarDir} = this.filterPath(filePath);
+        return tarDir.addINode(file);
     } catch(e) {
         console.log(e);
         throw e;
@@ -61,28 +49,29 @@ jayVFS.prototype.createFile = function(filePath) {
 
 jayVFS.prototype.getFile = function(filePath) {
     try {
-        if (filePath[0] === '/') {
-            return this.mtree.getINode(filePath.pop().toString());
-        } else {
-            let file = filePath.pop();
-            let tarDir = this.mtree.moveTo(filePath);
-            return tarDir.getINode(file);
-        }
+        let {file, tarDir} = this.filterPath(filePath);
+        return tarDir.getINode(file);
     } catch(e) {
         console.log(e);
         throw e;
     }
 };
 
+jayVFS.prototype.filterPath = function(path) {
+    path = path.split('/').filter(n => n);
+    let file = path.pop();
+    let tarDir = this.resolve(path.join('/'));
+    return {file, tarDir};
+};
+
 jayVFS.prototype.moveWdTo = function(dir) {
-    if (dir[0] === '/' && dir.length === 1) {
-        // This might need 'root' as a value.
-        this.wd = ['/'];
-    } else if (dir[0] === '.' || dir[0] === './') {
+    if (dir === '/') {
+        this.wd = this.mtree;
+    } else if (dir === '.' || dir === './') {
         // Do nothing.
     } else {
         try {
-            this.wd = this.mtree.moveTo(dir).fullpath.slice();
+            this.wd = this.resolve(dir);
         } catch(e) {
             console.log(e);
             throw Error(e.message);
@@ -95,7 +84,7 @@ jayVFS.prototype.getRoot = function() {
 };
 
 jayVFS.prototype.getWd = function() {
-    return JSON.parse(JSON.stringify(this.wd));
+    return this.wd;
 };
 
 jayVFS.prototype.getWdSubtree = function(dir) {
@@ -108,16 +97,10 @@ jayVFS.prototype.getWdSubtree = function(dir) {
 
 jayVFS.prototype.getDirContents = function(dir) {
     let lsContents = [];
-    let movedToDir = {};
-    if (dir[0] === '/' && dir.length === 1) {
-        movedToDir = this.mtree;
-    } else {
-        try {
-            movedToDir = this.mtree.moveTo(dir);
-        } catch(e) {
-            console.log(e);
-            throw Error(e.message);
-        }
+    let movedToDir = dir;
+    // There are cases where the working directory is root and sometimes it's not, so this comparison checks if
+    if (dir !== this.wd) {
+        movedToDir = this.resolve(dir);
     }
     movedToDir.subtrees.forEach(d => lsContents.push(d.name));
     movedToDir.inodes.forEach(i => lsContents.push(i.name));
@@ -127,6 +110,7 @@ jayVFS.prototype.getDirContents = function(dir) {
 
 jayVFS.prototype.deleteDir = function(dir) {
     try {
+        dir = this.resolve(dir).fullpath;
         this.mtree.deleteSubtree(dir);
     } catch(e) {
         console.log(e);
@@ -136,11 +120,49 @@ jayVFS.prototype.deleteDir = function(dir) {
 
 jayVFS.prototype.makeDir = function(dir) {
     try {
-        this.mtree.addSubtree(dir, this.mtree);
+        let {file, tarDir} = this.filterPath(dir);
+        this.mtree.addSubtree(tarDir.fullpath.concat(file), this.mtree);
     } catch(e) {
         console.log(e);
         throw Error(e.message);
     }
+};
+
+jayVFS.prototype.resolve = function(tarDir) {
+    let d = [];
+    if (tarDir.startsWith('/')) {
+        d.push('/'); // maybe needs to be root
+    }
+    d = d.concat(tarDir.split('/').filter(n => n));
+    if (!d || d.length === 0) {
+        return this.wd;
+    } else {
+        return this.getAbsPath(d);
+    }
+};
+
+jayVFS.prototype.getAbsPath = function(d) {
+    let wdStree;
+    if (d[0] === '/') {
+        wdStree = this.mtree;
+    } else {
+        wdStree = this.wd;
+    }
+    for (let i = 0; i < d.length; i++) {
+        if (d[i] === '.') {
+            // do nothing
+        } else if (d[i] === '..') {
+            if (wdStree.parenttree.name === 'root' || wdStree.name === 'root') {
+                wdStree = this.mtree;
+            } else {
+                wdStree = wdStree.parenttree;
+            }
+        } else {
+            // Gets child subtree
+            wdStree = this.getWdSubtree(wdStree.fullpath.concat(d[i]));
+        }
+    }
+    return wdStree;
 };
 
 module.exports = new jayVFS();

@@ -1,5 +1,4 @@
 const jvfs = require('../jvfs');
-const rpr = require('./relativePathResolution');
 
 /*
   Returns empty string if command executes.
@@ -11,11 +10,8 @@ let rm = function(paramDir) {
     } else if (!paramDir) {
         return 'rm: missing operand';
     }
-    let tarDir = paramDir.split('/').filter(n => n);
-    let tarFile = tarDir.pop();
-    tarDir = rpr(tarDir.join('/'));
     try {
-        jvfs.deleteFile(tarDir.concat(tarFile));
+        jvfs.deleteFile(paramDir);
         return '';
     } catch (e) {
         return 'rm: cannot remove \'' + paramDir + '\': ' + e.message;

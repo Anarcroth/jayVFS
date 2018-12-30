@@ -2,6 +2,7 @@ const fs = require('fs');
 
 const ls = require('./commands/ls');
 const cd = require('./commands/cd');
+const rm = require('./commands/rm');
 const cat = require('./commands/cat');
 const pwd = require('./commands/pwd');
 const date = require('./commands/date');
@@ -23,7 +24,7 @@ parser.prototype.parse = function(command) {
     case 'ls':
         return ls(params);
     case 'rm':
-        return 'TBD';
+        return rm(params);
     case 'mv':
         return 'TBD';
     case 'cd':

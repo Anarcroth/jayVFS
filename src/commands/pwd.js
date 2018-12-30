@@ -4,7 +4,7 @@ let pwd = function() {
     if (jvfs.getWd()[0] === '/') {
         return jvfs.getWd().join('/');
     } else {
-        return '/' + jvfs.getWd().join('/');
+        return '/' + jvfs.getWd().fullpath.join('/');
     }
 };
 
