@@ -2,6 +2,7 @@ const fs = require('fs');
 
 const ls = require('./commands/ls');
 const cd = require('./commands/cd');
+const mv = require('./commands/mv');
 const rm = require('./commands/rm');
 const cat = require('./commands/cat');
 const pwd = require('./commands/pwd');
@@ -26,7 +27,8 @@ parser.prototype.parse = function(command) {
     case 'rm':
         return rm(params);
     case 'mv':
-        return 'TBD';
+        // Takes in the whole line after the 'mv' command
+        return mv(commandAndParams.slice(1));
     case 'cd':
         return cd(params);
     case 'cp':
@@ -38,7 +40,7 @@ parser.prototype.parse = function(command) {
     case 'date':
         return date();
     case 'echo':
-        // This takes in the whole line after the 'echo' command
+        // Takes in the whole line after the 'echo' command
         return echo(commandAndParams.slice(1));
     case 'help':
         return help(params);
