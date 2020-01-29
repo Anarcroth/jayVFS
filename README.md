@@ -1,4 +1,6 @@
-# jayVFS
+![jayvfs](./jayvfs.png "jayvfs")
+
+---
 
 A virtual file system in NodeJS.
 
@@ -12,27 +14,27 @@ git clone https://github.com/Anarcroth/jayVFS.git
 
 Navigate in the project directory and run
 
-``` javascript
+``` bash
 npm install
 ```
 
 ## Setup
 
-This VFS has it's own twist on a `B+ Tree`. The full documentation can be found in [here](./documentation/DOC.md).
+This VFS has it's own twist on a `B+Tree`. The full documentation can be found in [here](./documentation/DOC.md).
 
-Here are the supported commands:
+Here are the supported commands (for now):
 
-`ls` - Lists directory contents. \
-`rm` - Remove a target file. \
-`cd` - Changes the working directory. \
-`pwd` - Prints name of current/working directory. \
-`cat` - Concatenates files and print on the standard output. \
-`date` - Prints or set the system date and time. \
-`echo` - Displays a line of text. Can also add or append data to a file. \
-`help` - Prints help, or, if specified, prints a specific help listing of a command. \
-`mkdir` - Makes a specified directory. \
-`rmdir` - Removes a specified directory. \
-`touch` - Creates a file. \
+```
+ls - [./] [../] [DIR]; List information about the FILEs (the current directory by default).
+rm - [FILE]; Removes specified file.
+cd - [./] [../] [DIRECTORY]; Change the working directory of the current shell execution environment.
+pwd - Print the name of current working directory.
+cat - [FILE]; Concatenate FILE(s) to standard output.
+help - [COMMAND]; Print the help of a command.
+mkdir - [DIRECTORY]; Create the DIRECTORY, if it does not already exist.
+rmdir - [DIRECTORY]; Remove the DIRECTORY, if it is empty.
+touch - [FILE]; A FILE argument that does not exist is created empty.
+```
 
 ## Contributions
 
