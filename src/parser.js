@@ -6,8 +6,6 @@ const mv = require('./commands/mv');
 const rm = require('./commands/rm');
 const cat = require('./commands/cat');
 const pwd = require('./commands/pwd');
-const date = require('./commands/date');
-const echo = require('./commands/echo');
 const help = require('./commands/help');
 const mkdir = require('./commands/mkdir');
 const rmdir = require('./commands/rmdir');
@@ -37,11 +35,6 @@ parser.prototype.parse = function(command) {
         return cat(params);
     case 'pwd':
         return pwd();
-    case 'date':
-        return date();
-    case 'echo':
-        // Takes in the whole line after the 'echo' command
-        return echo(commandAndParams.slice(1));
     case 'help':
         return help(params);
     case 'mkdir':
