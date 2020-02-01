@@ -8,6 +8,10 @@ stdin.addListener('data', function(c) {
         console.log('Exiting . . .');
         process.exit(0);
     }
-    let response = cparser.parse(command);
-    console.log(response);
+    try {
+        let response = cparser.parse(command);
+        console.log(response);
+    } catch (e) {
+        console.log(e.message);
+    }
 });

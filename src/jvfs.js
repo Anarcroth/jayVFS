@@ -27,33 +27,18 @@ jayVFS.prototype.mapFiles = function() {
 };
 
 jayVFS.prototype.deleteFile = function(filePath) {
-    try {
-        let {file, tarDir} = this.filterPath(filePath);
-        tarDir.deleteINode(file);
-    } catch(e) {
-        console.log(e);
-        throw e;
-    }
+    let {file, tarDir} = this.filterPath(filePath);
+    tarDir.deleteINode(file);
 };
 
 jayVFS.prototype.createFile = function(filePath) {
-    try {
-        let {file, tarDir} = this.filterPath(filePath);
-        return tarDir.addINode(file);
-    } catch(e) {
-        console.log(e);
-        throw e;
-    }
+    let {file, tarDir} = this.filterPath(filePath);
+    return tarDir.addINode(file);
 };
 
 jayVFS.prototype.getFile = function(filePath) {
-    try {
-        let {file, tarDir} = this.filterPath(filePath);
-        return tarDir.getINode(file);
-    } catch(e) {
-        console.log(e);
-        throw e;
-    }
+    let {file, tarDir} = this.filterPath(filePath);
+    return tarDir.getINode(file);
 };
 
 jayVFS.prototype.setFileContents = function(filePath, contents) {
@@ -79,12 +64,7 @@ jayVFS.prototype.moveWdTo = function(dir) {
     } else if (dir === '.' || dir === './') {
         // Do nothing.
     } else {
-        try {
-            this.wd = this.resolve(dir);
-        } catch(e) {
-            console.log(e);
-            throw Error(e.message);
-        }
+        this.wd = this.resolve(dir);
     }
 };
 
@@ -118,23 +98,13 @@ jayVFS.prototype.getDirContents = function(dir) {
 };
 
 jayVFS.prototype.deleteDir = function(dir) {
-    try {
-        dir = this.resolve(dir).fullpath;
-        this.mtree.deleteSubtree(dir);
-    } catch(e) {
-        console.log(e);
-        throw Error(e.message);
-    }
+    dir = this.resolve(dir).fullpath;
+    this.mtree.deleteSubtree(dir);
 };
 
 jayVFS.prototype.makeDir = function(dir) {
-    try {
-        let {file, tarDir} = this.filterPath(dir);
-        this.mtree.addSubtree(tarDir.fullpath.concat(file), this.mtree);
-    } catch(e) {
-        console.log(e);
-        throw Error(e.message);
-    }
+    let {file, tarDir} = this.filterPath(dir);
+    this.mtree.addSubtree(tarDir.fullpath.concat(file), this.mtree);
 };
 
 jayVFS.prototype.resolve = function(tarDir) {

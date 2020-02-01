@@ -30,7 +30,7 @@ parser.prototype.parse = function(command) {
     case 'cd':
         return cd(params);
     case 'cp':
-        return 'TBD';
+        throw Error('command not implemented yet');
     case 'cat':
         return cat(params);
     case 'pwd':
@@ -42,14 +42,12 @@ parser.prototype.parse = function(command) {
     case 'rmdir':
         return rmdir(params);
     case 'touch':
-        // This command needs to specifically return an empty string,
-        // because it returns an object that might be used by other commands
         touch(params);
         return '';
     case '':
         return '';
     default:
-        throw Error('mishmash: command not found: ' + c);
+        throw Error('command not found: ' + c);
     }
 };
 
