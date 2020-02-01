@@ -56,6 +56,16 @@ jayVFS.prototype.getFile = function(filePath) {
     }
 };
 
+jayVFS.prototype.setFileContents = function(filePath, contents) {
+    let file = this.getFile(filePath);
+    file.set(contents);
+};
+
+jayVFS.prototype.appendFileContents = function(filePath, contents) {
+    let file = this.getFile(filePath);
+    file.append(contents);
+};
+
 jayVFS.prototype.filterPath = function(path) {
     path = path.split('/').filter(n => n);
     let file = path.pop();
