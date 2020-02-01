@@ -1,8 +1,8 @@
-const user = require('../src/user');
+const fsLoader = require('../src/fsStructLoader');
 const mTree = require('../src/mtree');
 
 var jayVFS = function() {
-    this.user = user;
+    this.fsStructLoader = fsLoader;
     this.mtree = new mTree('root');
     this.wd = this.mtree;
 
@@ -11,7 +11,7 @@ var jayVFS = function() {
 };
 
 jayVFS.prototype.mapDirs = function() {
-    this.user.getDirs().forEach(d => {
+    this.fsStructLoader.getDirs().forEach(d => {
         // 'd' has to be an absolute path starting from root ('/').
         // 'd' is first cleaned from the separator character and then passed to the ADT.
         d = d.split('/').filter(n => n);
@@ -20,10 +20,9 @@ jayVFS.prototype.mapDirs = function() {
 };
 
 jayVFS.prototype.mapFiles = function() {
-    let files = this.user.getFinalFiles();
-    for (let f = 0; f < files.length - 1; f += 2) {
+    let files = this.fsStructLoader.getFiles();
+    for (let f = 0; f < files.length; f++) {
         let createdFile = this.createFile(files[f]);
-        createdFile.append(files[f + 1]);
     }
 };
 
