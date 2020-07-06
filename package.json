@@ -1,0 +1,30 @@
+{
+  "name": "@anarcroth/jayvfs",
+  "version": "0.1.0",
+  "description": "virtual file system in node-js",
+  "main": "demo.js",
+  "scripts": {
+    "test": "node demo.js"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anarcroth/jayVFS.git"
+  },
+  "keywords": [
+    "jayVFS",
+    "vfs",
+    "node-js",
+    "js",
+    "virtual-file-system",
+    "node"
+  ],
+  "author": "Martin Nestorov",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Anarcroth/jayVFS/issues"
+  },
+  "homepage": "https://github.com/Anarcroth/jayVFS#readme"
+}
